@@ -643,25 +643,7 @@ with st.sidebar:
 
     # ── API Configuration
     st.markdown('<div class="sidebar-section">API Configuration</div>', unsafe_allow_html=True)
-    current_key = os.getenv("MISTRAL_API_KEY", "")
-    if current_key == "your_mistral_api_key_here":
-        current_key = ""
-
-    mistral_key_input = st.text_input(
-        "Mistral API Key",
-        value=current_key,
-        type="password",
-        placeholder="Paste your API key here",
-        help="Get a key from https://console.mistral.ai/",
-    )
-
-    if mistral_key_input.strip():
-        os.environ["MISTRAL_API_KEY"] = mistral_key_input.strip()
-        try:
-            with open(".env", "w") as f:
-                f.write(f"MISTRAL_API_KEY={mistral_key_input.strip()}\n")
-        except Exception:
-            pass
+    st.info("💡 **Powered by a shared demo key.**\n\nFor heavy use, please clone the repository and use your own API keys.", icon="🔑")
 
     st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
     run_btn = st.button("⚡  Run Analysis", use_container_width=True)
@@ -702,9 +684,7 @@ st.markdown("""
 
 # ── Run Pipeline ────────────────────────────────────────────────────────────────
 if run_btn:
-    if not os.getenv("MISTRAL_API_KEY") or os.getenv("MISTRAL_API_KEY") == "your_mistral_api_key_here":
-        st.error("❌ Please enter a valid Mistral API Key in the sidebar.")
-    elif not source.strip():
+    if not source.strip():
         st.error("Please enter a YouTube URL or file path.")
     else:
         st.session_state.pipeline_done = False

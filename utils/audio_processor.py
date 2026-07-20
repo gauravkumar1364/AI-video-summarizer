@@ -67,6 +67,12 @@ def chunk_audio(wav_path: str, chunk_minutes: int = 10) -> list:
     audio = AudioSegment.from_wav(wav_path)
     # Ensure source is 16 kHz mono before chunking
     audio = audio.set_channels(1).set_frame_rate(16000)
+    
+    # Usage Cap: Max 10 minutes (600,000 ms) for the shared demo key
+    MAX_DURATION_MS = 10 * 60 * 1000
+    if len(audio) > MAX_DURATION_MS:
+        raise ValueError(f"Video is too long ({len(audio) // 60000} mins). The shared demo is capped at 10 minutes to prevent abuse. Please clone the repo to process longer videos!")
+
     chunk_ms = chunk_minutes * 60 * 1000
 
     chunks = []
