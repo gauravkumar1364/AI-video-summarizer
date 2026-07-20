@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Audio Downloads
+downloades/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Streamlit
+.streamlit/
+
+# Vector Database
+vector_db/
